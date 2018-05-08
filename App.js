@@ -17,7 +17,7 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
-          <Project background="#4fe292" title="Building furniture" />
+          <Project background="mediumspringgreen" title="Building furniture" />
           <Project background="papayawhip" color="#000" title="Chopping wood" />
           <Project background="dodgerblue" title="Learn the flute" />
           <View style={[styles.box, styles.boxAdd]}>
