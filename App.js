@@ -1,9 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native';
 
 const Project = ({ background, color = 'white', title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
-    <Text style={[styles.boxText, { color: color }]}>{title}</Text>
+    {title ? (
+      <Text style={[styles.boxText, { color: color }]}>{title}</Text>
+    ) : (
+      <TextInput style={[styles.boxText, { color: color }]} placeholder="Your project name" />
+    )}
     <View style={styles.progressBar}>
       <View style={[styles.progressBarFill, { backgroundColor: color }]} />
     </View>
@@ -29,18 +33,26 @@ export default class App extends React.Component {
     ]
   }
 
+  addProject() {
+    this.setState(prevState => ({
+      projects: [...prevState.projects, {
+        background: 'peachpuff',
+      }]
+    }));
+  }
+
   render() {
     return (
       <ScrollView>
         <View style={styles.container}>
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
-          {this.state.projects.map(project => (
-            <Project key={project.title} {...project} />
+          {this.state.projects.map((project, key) => (
+            <Project key={key} {...project} />
           ))}
-          <View style={[styles.box, styles.boxAdd]}>
+          <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
-          </View>
+          </TouchableHighlight>
         </View>
       </ScrollView>
     );
