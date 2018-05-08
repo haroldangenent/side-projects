@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native'
 
 const Project = ({ background, color = 'white', onSubmit, title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
@@ -47,7 +47,7 @@ export default class App extends React.Component {
         background: 'peachpuff',
         id: this.state.projects[this.state.projects.length - 1].id + 1,
       }]
-    });
+    })
   }
 
   setTitle(id, title) {
@@ -59,7 +59,7 @@ export default class App extends React.Component {
       ...this.state.projects.slice(index + 1)
     ]
 
-    this.setState({ projects });
+    this.setState({ projects })
   }
 
   render() {
@@ -76,7 +76,7 @@ export default class App extends React.Component {
           </TouchableHighlight>
         </View>
       </ScrollView>
-    );
+    )
   }
 }
 
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '80%',
   },
-});
+})
