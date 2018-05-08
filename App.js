@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, Text
 const Project = ({ background, color = 'white', onSubmit, title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
     {title ? (
-      <Text style={[styles.boxText, { color: color }]}>{title}</Text>
+      <Text style={[styles.boxText, { color }]}>{title}</Text>
     ) : (
       <TextInput
-        style={[styles.boxText, { color: color }]}
+        style={[styles.boxText, { color }]}
         placeholder="Your project name"
         returnKeyType="done"
         onSubmitEditing={onSubmit}
