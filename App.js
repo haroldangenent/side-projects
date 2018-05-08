@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   box: {
     borderRadius: 3,
     marginBottom: 10,
-    minHeight: 100,
     padding: 25,
   },
   boxAdd: {
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightslategrey',
     display: 'flex',
     justifyContent: 'center',
-    height: 100,
   },
   boxText: {
     color: '#fff',
