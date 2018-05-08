@@ -11,15 +11,33 @@ const Project = ({ background, color = 'white', title }) => (
 )
 
 export default class App extends React.Component {
+  state = {
+    projects: [
+      {
+        background: 'mediumspringgreen',
+        title: 'Building furniture',
+      },
+      {
+        background: 'papayawhip',
+        color: 'black',
+        title: 'Chopping wood',
+      },
+      {
+        background: 'dodgerblue',
+        title: 'Learn the flute',
+      },
+    ]
+  }
+
   render() {
     return (
       <ScrollView>
         <View style={styles.container}>
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
-          <Project background="mediumspringgreen" title="Building furniture" />
-          <Project background="papayawhip" color="black" title="Chopping wood" />
-          <Project background="dodgerblue" title="Learn the flute" />
+          {this.state.projects.map(project => (
+            <Project key={project.title} {...project} />
+          ))}
           <View style={[styles.box, styles.boxAdd]}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
           </View>
