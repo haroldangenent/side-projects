@@ -42,12 +42,12 @@ export default class App extends React.Component {
   }
 
   addProject() {
-    this.setState(prevState => ({
-      projects: [...prevState.projects, {
+    this.setState({
+      projects: [...this.state.projects, {
         background: 'peachpuff',
-        id: prevState.projects[prevState.projects.length - 1].id + 1,
+        id: this.state.projects[this.state.projects.length - 1].id + 1,
       }]
-    }));
+    });
   }
 
   setTitle(id, title) {
