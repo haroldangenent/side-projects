@@ -4,6 +4,9 @@ import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native';
 const Project = ({ background, color = '#fff', title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
     <Text style={[styles.boxText, { color: color }]}>{title}</Text>
+    <View style={styles.progressBar}>
+      <View style={[styles.progressBarFill, { backgroundColor: color }]} />
+    </View>
   </View>
 )
 
@@ -18,7 +21,7 @@ export default class App extends React.Component {
           <Project background="papayawhip" color="#000" title="Chopping wood" />
           <Project background="dodgerblue" title="Learn the flute" />
           <View style={[styles.box, styles.boxAdd]}>
-            <Text style={styles.boxText}>+ Add new project</Text>
+            <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
           </View>
         </View>
       </ScrollView>
@@ -44,6 +47,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 22,
     fontWeight: '600',
+    marginBottom: 20,
   },
   container: {
     flex: 1,
@@ -56,6 +60,13 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   progressBar: {
-
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    borderRadius: 4,
+    height: 8,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    width: '80%',
   },
 });
