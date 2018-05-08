@@ -1,12 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native';
 
-const Project = ({ background, color = 'white', title }) => (
+const Project = ({ background, color = 'white', onSubmit, title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
     {title ? (
       <Text style={[styles.boxText, { color: color }]}>{title}</Text>
     ) : (
-      <TextInput style={[styles.boxText, { color: color }]} placeholder="Your project name" />
+      <TextInput
+        style={[styles.boxText, { color: color }]}
+        placeholder="Your project name"
+        returnKeyType="done"
+        onSubmitEditing={onSubmit}
+      />
     )}
     <View style={styles.progressBar}>
       <View style={[styles.progressBarFill, { backgroundColor: color }]} />
@@ -45,6 +50,18 @@ export default class App extends React.Component {
     }));
   }
 
+  setTitle(id, title) {
+    const project = this.state.projects.reduce((match, project) => project.id === id ? project : match)
+    const index = this.state.projects.indexOf(project)
+    const projects = [
+      ...this.state.projects.slice(0, index),
+      {...project, title },
+      ...this.state.projects.slice(index + 1)
+    ]
+
+    this.setState({ projects });
+  }
+
   render() {
     return (
       <ScrollView>
@@ -52,7 +69,7 @@ export default class App extends React.Component {
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
           {this.state.projects.map(project => (
-            <Project key={project.id} {...project} />
+            <Project key={project.id} onSubmit={event => this.setTitle(project.id, event.nativeEvent.text)} {...project} />
           ))}
           <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
