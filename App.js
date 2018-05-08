@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native';
 
-const Project = ({ background, color = '#fff', title }) => (
+const Project = ({ background, color = 'white', title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
     <Text style={[styles.boxText, { color: color }]}>{title}</Text>
     <View style={styles.progressBar}>
@@ -18,7 +18,7 @@ export default class App extends React.Component {
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
           <Project background="mediumspringgreen" title="Building furniture" />
-          <Project background="papayawhip" color="#000" title="Chopping wood" />
+          <Project background="papayawhip" color="black" title="Chopping wood" />
           <Project background="dodgerblue" title="Learn the flute" />
           <View style={[styles.box, styles.boxAdd]}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
