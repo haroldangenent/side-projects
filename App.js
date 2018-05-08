@@ -19,15 +19,18 @@ export default class App extends React.Component {
     projects: [
       {
         background: 'mediumspringgreen',
+        id: 1,
         title: 'Building furniture',
       },
       {
         background: 'papayawhip',
         color: 'black',
+        id: 2,
         title: 'Chopping wood',
       },
       {
         background: 'dodgerblue',
+        id: 3,
         title: 'Learn the flute',
       },
     ]
@@ -37,6 +40,7 @@ export default class App extends React.Component {
     this.setState(prevState => ({
       projects: [...prevState.projects, {
         background: 'peachpuff',
+        id: prevState.projects[prevState.projects.length - 1].id + 1,
       }]
     }));
   }
@@ -47,8 +51,8 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
-          {this.state.projects.map((project, key) => (
-            <Project key={key} {...project} />
+          {this.state.projects.map(project => (
+            <Project key={project.id} {...project} />
           ))}
           <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
