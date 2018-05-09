@@ -1,11 +1,11 @@
 import colors from 'css-color-names'
-import contrast from 'contrast'
+import Color from 'color'
 
 const colorNames = Object.keys(colors)
 
 export default {
   contrast(color) {
-    return contrast(colors[color]) === 'light' ? '#000' : '#fff'
+    return (new Color(color)).isLight() ? '#000' : '#fff'
   },
   random(exclusions = []) {
     let color

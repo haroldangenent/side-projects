@@ -19,7 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "contrast": "^1.0.1",
+    "color": "^3.0.0",
     "css-color-names": "0.0.4",
     "expo": "^27.0.1",
     "react": "16.3.1",
