@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import color from './color'
 import Swipeable from 'react-native-swipeable'
 import Heading from './Heading'
+import Container from './Container'
 
 const Project = ({ background, onDelete, onPress, onSubmit, title }) => (
   <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
@@ -70,7 +71,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <KeyboardAwareScrollView>
-        <View style={styles.container}>
+        <Container>
           <StatusBar hidden={true} />
           <Heading>Side projects</Heading>
           {this.state.projects.map(project => (
@@ -79,7 +80,7 @@ export default class Home extends React.Component {
           <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
           </TouchableHighlight>
-        </View>
+        </Container>
       </KeyboardAwareScrollView>
     )
   }
@@ -106,11 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600',
     marginBottom: 20,
-  },
-  container: {
-    flex: 1,
-    padding: 30,
-    paddingTop: 40,
   },
   progressBar: {
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
