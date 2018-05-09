@@ -1,16 +1,29 @@
 import React from 'react'
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
 import Heading from './Heading'
 import Container from './Container'
 import color from './color'
 import Text, { css as textStyle } from './Text'
 
 export default class Project extends React.Component {
-  state = {
-    tasks: []
-  }
   project = this.props.navigation.state.params.project
   contrast = color.contrast(this.project.background)
+  state = {
+    tasks: this.project.tasks || []
+  }
+
+  componentWillUpdate(props, state) {
+    AsyncStorage.getItem('projects')
+      .then(value => JSON.parse(value))
+      .then(projects => projects.map(project => {
+        if (project.id === this.project.id) {
+          project.tasks = state.tasks
+        }
+
+        return project
+      }))
+      .then(newProjects => AsyncStorage.setItem('projects', JSON.stringify(newProjects)))
+  }
 
   addTask(name) {
     if (!name) {

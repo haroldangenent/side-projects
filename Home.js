@@ -35,13 +35,18 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    AsyncStorage.getItem('projects')
-      .then(value => JSON.parse(value))
-      .then(projects => projects && this.setState({ projects }))
+    this.getData()
+    this.props.navigation.addListener('didFocus', () => this.getData())
   }
 
   componentWillUpdate(props, state) {
     AsyncStorage.setItem('projects', JSON.stringify(state.projects))
+  }
+
+  getData() {
+    AsyncStorage.getItem('projects')
+      .then(value => JSON.parse(value))
+      .then(projects => projects && this.setState({ projects }))
   }
 
   addProject() {
