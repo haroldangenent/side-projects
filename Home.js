@@ -5,7 +5,7 @@ import color from './color'
 import Swipeable from 'react-native-swipeable'
 import Heading from './Heading'
 import Container from './Container'
-import Text, { textStyle } from './Text'
+import Text, { css as textStyle } from './Text'
 
 const Project = ({ background, onDelete, onPress, onSubmit, title }) => (
   <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
