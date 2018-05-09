@@ -1,20 +1,21 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput, AsyncStorage } from 'react-native'
+import { StyleSheet, View, ScrollView, StatusBar, TouchableHighlight, TextInput, AsyncStorage } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import color from './color'
 import Swipeable from 'react-native-swipeable'
 import Heading from './Heading'
 import Container from './Container'
+import Text, { textStyle } from './Text'
 
 const Project = ({ background, onDelete, onPress, onSubmit, title }) => (
   <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
     <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]} onPress={onPress}>
       <View>
         {title ? (
-          <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
+          <Text style={{ color: color.contrast(background) }}>{title}</Text>
         ) : (
           <TextInput
-            style={[styles.boxText, { color: color.contrast(background) }]}
+            style={[textStyle, { color: color.contrast(background) }]}
             placeholder="Your project name"
             returnKeyType="done"
             onSubmitEditing={onSubmit}
@@ -78,7 +79,7 @@ export default class Home extends React.Component {
             <Project key={project.id} onSubmit={event => this.setTitle(project.id, event.nativeEvent.text)} onDelete={() => this.deleteProject(project.id)} onPress={() => this.props.navigation.navigate('Project', { project })} {...project} />
           ))}
           <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
-            <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
+            <Text style={{ marginBottom: 0 }}>+ Add new project</Text>
           </TouchableHighlight>
         </Container>
       </KeyboardAwareScrollView>
@@ -101,12 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightslategrey',
     display: 'flex',
     justifyContent: 'center',
-  },
-  boxText: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: '600',
-    marginBottom: 20,
   },
   progressBar: {
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
