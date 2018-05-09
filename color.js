@@ -5,7 +5,7 @@ const colorNames = Object.keys(colors)
 
 export default {
   contrast(color) {
-    return Color(color).isLight() ? '#000' : '#fff'
+    return Color(color).luminosity() > 0.5 ? '#000' : '#fff'
   },
   darken(color) {
     return Color(color).darken(0.25)
