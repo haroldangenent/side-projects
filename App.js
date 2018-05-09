@@ -6,21 +6,23 @@ import Swipeable from 'react-native-swipeable'
 
 const Project = ({ background, onDelete, onSubmit, title }) => (
   <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
-    <View style={[styles.box, { backgroundColor: background }]}>
-      {title ? (
-        <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
-      ) : (
-        <TextInput
-          style={[styles.boxText, { color: color.contrast(background) }]}
-          placeholder="Your project name"
-          returnKeyType="done"
-          onSubmitEditing={onSubmit}
-        />
-      )}
-      <View style={styles.progressBar}>
-        <View style={[styles.progressBarFill, { backgroundColor: color.contrast(background) }]} />
+    <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]}>
+      <View>
+        {title ? (
+          <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
+        ) : (
+          <TextInput
+            style={[styles.boxText, { color: color.contrast(background) }]}
+            placeholder="Your project name"
+            returnKeyType="done"
+            onSubmitEditing={onSubmit}
+          />
+        )}
+        <View style={styles.progressBar}>
+          <View style={[styles.progressBarFill, { backgroundColor: color.contrast(background) }]} />
+        </View>
       </View>
-    </View>
+    </TouchableHighlight>
   </Swipeable>
 )
 

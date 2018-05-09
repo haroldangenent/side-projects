@@ -5,7 +5,10 @@ const colorNames = Object.keys(colors)
 
 export default {
   contrast(color) {
-    return (new Color(color)).isLight() ? '#000' : '#fff'
+    return Color(color).isLight() ? '#000' : '#fff'
+  },
+  darken(color) {
+    return Color(color).darken(0.25)
   },
   random(exclusions = []) {
     let color
