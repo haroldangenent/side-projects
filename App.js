@@ -80,6 +80,10 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginBottom: 10,
     padding: 25,
+    shadowColor: 'black',
+    shadowRadius: 5,
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0.15,
   },
   boxAdd: {
     alignItems: 'center',
