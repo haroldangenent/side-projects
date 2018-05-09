@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Project = ({ background, color = 'white', onSubmit, title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
@@ -64,7 +65,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <ScrollView>
+      <KeyboardAwareScrollView>
         <View style={styles.container}>
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
@@ -75,7 +76,7 @@ export default class App extends React.Component {
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
           </TouchableHighlight>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }
