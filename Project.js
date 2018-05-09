@@ -1,6 +1,7 @@
 import React from 'react'
 import Heading from './Heading'
 import Container from './Container'
+import color from './color'
 
 export default class Project extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export default class Project extends React.Component {
 
     return (
       <Container style={{ backgroundColor: project.background }}>
-        <Heading>{project.title}</Heading>
+        <Heading style={{ color: color.contrast(project.background) }}>{project.title}</Heading>
       </Container>
     )
   }
