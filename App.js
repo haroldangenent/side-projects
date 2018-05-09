@@ -48,7 +48,7 @@ export default class App extends React.Component {
     })
   }
 
-  deleteProject(id) {    
+  deleteProject(id) {
     this.setState({ projects: this.state.projects.filter(project => project.id != id) })
   }
 
