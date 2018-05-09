@@ -3,10 +3,17 @@ import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, Text
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import color from './color'
 import Swipeable from 'react-native-swipeable'
+import { createStackNavigator } from 'react-navigation';
 
-const Project = ({ background, onDelete, onSubmit, title }) => (
+class ProjectScreen extends React.Component {
+  render() {
+    return <TouchableHighlight onPress={() => this.props.navigation.goBack()}><Text>{this.props.navigation.state.params.project.title}</Text></TouchableHighlight>
+  }
+}
+
+const Project = ({ background, onDelete, onPress, onSubmit, title }) => (
   <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
-    <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]}>
+    <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]} onPress={onPress}>
       <View>
         {title ? (
           <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
@@ -26,7 +33,7 @@ const Project = ({ background, onDelete, onSubmit, title }) => (
   </Swipeable>
 )
 
-export default class App extends React.Component {
+class HomeScreen extends React.Component {
   state = {
     projects: [],
   }
@@ -73,7 +80,7 @@ export default class App extends React.Component {
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
           {this.state.projects.map(project => (
-            <Project key={project.id} onSubmit={event => this.setTitle(project.id, event.nativeEvent.text)} onDelete={() => this.deleteProject(project.id)} {...project} />
+            <Project key={project.id} onSubmit={event => this.setTitle(project.id, event.nativeEvent.text)} onDelete={() => this.deleteProject(project.id)} onPress={() => this.props.navigation.navigate('Project', { project })} {...project} />
           ))}
           <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
@@ -127,3 +134,8 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 })
+
+export default App = createStackNavigator({
+  Home: { screen: HomeScreen },
+  Project: { screen: ProjectScreen },
+}, { headerMode: 'none' });
