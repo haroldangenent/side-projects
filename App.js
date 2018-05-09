@@ -3,20 +3,20 @@ import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, Text
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import color from './color'
 
-const Project = ({ background, color = 'white', onSubmit, title }) => (
+const Project = ({ background, onSubmit, title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
     {title ? (
-      <Text style={[styles.boxText, { color }]}>{title}</Text>
+      <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
     ) : (
       <TextInput
-        style={[styles.boxText, { color }]}
+        style={[styles.boxText, { color: color.contrast(background) }]}
         placeholder="Your project name"
         returnKeyType="done"
         onSubmitEditing={onSubmit}
       />
     )}
     <View style={styles.progressBar}>
-      <View style={[styles.progressBarFill, { backgroundColor: color }]} />
+      <View style={[styles.progressBarFill, { backgroundColor: color.contrast(background) }]} />
     </View>
   </View>
 )
@@ -31,7 +31,6 @@ export default class App extends React.Component {
       },
       {
         background: 'papayawhip',
-        color: 'black',
         id: 2,
         title: 'Chopping wood',
       },
