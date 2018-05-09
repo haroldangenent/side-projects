@@ -33,9 +33,9 @@ export default class Project extends React.Component {
       <Container style={{ backgroundColor: this.project.background }}>
         <Heading style={{ color: this.contrast }}>{this.project.title}</Heading>
         {this.state.tasks.map(task => (
-          <Text key={task.id}>{task.name}</Text>
+          <Text style={{ color: this.contrast }} key={task.id}>{task.name}</Text>
         ))}
-        <TouchableOpacity activeOpacity={1} style={styles.input} onPress={() => this.input.focus()}>
+        <TouchableOpacity activeOpacity={1} style={styles.input} onPress={() => this.input.isFocused() ? this.input.blur() : this.input.focus()}>
           <TextInput
             key={`newTask-${this.state.tasks.length}`}
             style={[textStyle, { color: this.contrast }]}
