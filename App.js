@@ -2,23 +2,26 @@ import React from 'react'
 import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput, AsyncStorage } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import color from './color'
+import Swipeable from 'react-native-swipeable'
 
-const Project = ({ background, onSubmit, title }) => (
-  <View style={[styles.box, { backgroundColor: background }]}>
-    {title ? (
-      <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
-    ) : (
-      <TextInput
-        style={[styles.boxText, { color: color.contrast(background) }]}
-        placeholder="Your project name"
-        returnKeyType="done"
-        onSubmitEditing={onSubmit}
-      />
-    )}
-    <View style={styles.progressBar}>
-      <View style={[styles.progressBarFill, { backgroundColor: color.contrast(background) }]} />
+const Project = ({ background, onDelete, onSubmit, title }) => (
+  <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
+    <View style={[styles.box, { backgroundColor: background }]}>
+      {title ? (
+        <Text style={[styles.boxText, { color: color.contrast(background) }]}>{title}</Text>
+      ) : (
+        <TextInput
+          style={[styles.boxText, { color: color.contrast(background) }]}
+          placeholder="Your project name"
+          returnKeyType="done"
+          onSubmitEditing={onSubmit}
+        />
+      )}
+      <View style={styles.progressBar}>
+        <View style={[styles.progressBarFill, { backgroundColor: color.contrast(background) }]} />
+      </View>
     </View>
-  </View>
+  </Swipeable>
 )
 
 export default class App extends React.Component {
@@ -45,6 +48,10 @@ export default class App extends React.Component {
     })
   }
 
+  deleteProject(id) {    
+    this.setState({ projects: this.state.projects.filter(project => project.id != id) })
+  }
+
   setTitle(id, title) {
     const project = this.state.projects.reduce((match, project) => project.id === id ? project : match)
     const index = this.state.projects.indexOf(project)
@@ -64,7 +71,7 @@ export default class App extends React.Component {
           <StatusBar hidden={true} />
           <Text style={styles.heading}>Side projects</Text>
           {this.state.projects.map(project => (
-            <Project key={project.id} onSubmit={event => this.setTitle(project.id, event.nativeEvent.text)} {...project} />
+            <Project key={project.id} onSubmit={event => this.setTitle(project.id, event.nativeEvent.text)} onDelete={() => this.deleteProject(project.id)} {...project} />
           ))}
           <TouchableHighlight style={[styles.box, styles.boxAdd]} onPress={() => this.addProject()}>
             <Text style={[styles.boxText, { marginBottom: 0 }]}>+ Add new project</Text>
