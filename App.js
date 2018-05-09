@@ -23,30 +23,14 @@ const Project = ({ background, onSubmit, title }) => (
 
 export default class App extends React.Component {
   state = {
-    projects: [
-      {
-        background: 'mediumspringgreen',
-        id: 1,
-        title: 'Building furniture',
-      },
-      {
-        background: 'papayawhip',
-        id: 2,
-        title: 'Chopping wood',
-      },
-      {
-        background: 'dodgerblue',
-        id: 3,
-        title: 'Learn the flute',
-      },
-    ]
+    projects: []
   }
 
   addProject() {
     this.setState({
       projects: [...this.state.projects, {
         background: color.random(this.state.projects.map(project => project.background)),
-        id: this.state.projects[this.state.projects.length - 1].id + 1,
+        id: this.state.projects.length ? this.state.projects[this.state.projects.length - 1].id + 1 : 1,
       }]
     })
   }
