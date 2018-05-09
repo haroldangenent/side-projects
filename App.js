@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput, AsyncStorage } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import color from './color'
 
@@ -23,7 +23,17 @@ const Project = ({ background, onSubmit, title }) => (
 
 export default class App extends React.Component {
   state = {
-    projects: []
+    projects: [],
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem('projects')
+      .then(value => JSON.parse(value))
+      .then(projects => projects && this.setState({ projects }))
+  }
+
+  componentWillUpdate(props, state) {
+    AsyncStorage.setItem('projects', JSON.stringify(state.projects))
   }
 
   addProject() {
