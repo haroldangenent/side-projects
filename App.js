@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, StatusBar, TouchableHighlight, TextInput } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import color from './color'
 
 const Project = ({ background, color = 'white', onSubmit, title }) => (
   <View style={[styles.box, { backgroundColor: background }]}>
@@ -45,7 +46,7 @@ export default class App extends React.Component {
   addProject() {
     this.setState({
       projects: [...this.state.projects, {
-        background: 'peachpuff',
+        background: color.random(this.state.projects.map(project => project.background)),
         id: this.state.projects[this.state.projects.length - 1].id + 1,
       }]
     })

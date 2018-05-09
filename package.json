@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "css-color-names": "0.0.4",
     "expo": "^27.0.1",
     "react": "16.3.1",
     "react-native": "~0.55.2",
