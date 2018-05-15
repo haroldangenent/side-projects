@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Heading from './Heading'
 import Container from './Container'
 import color from './color'
@@ -43,23 +44,25 @@ export default class Project extends React.Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: this.project.background }}>
-        <Heading style={{ color: this.contrast }}>{this.project.title}</Heading>
-        {this.state.tasks.map(task => (
-          <Text style={{ color: this.contrast }} key={task.id}>{task.name}</Text>
-        ))}
-        <TouchableOpacity activeOpacity={1} style={styles.input} onPress={() => this.input.isFocused() ? this.input.blur() : this.input.focus()}>
-          <TextInput
-            key={`newTask-${this.state.tasks.length}`}
-            style={[textStyle, { color: this.contrast }]}
-            placeholder="+ Add task"
-            returnKeyType="done"
-            onSubmitEditing={event => this.addTask(event.nativeEvent.text)}
-            clearOnFocus={true}
-            ref={input => this.input = input}
-          />
-        </TouchableOpacity>
-      </Container>
+      <KeyboardAwareScrollView style={{ backgroundColor: this.project.background }}>
+        <Container>
+          <Heading style={{ color: this.contrast }}>{this.project.title}</Heading>
+          {this.state.tasks.map(task => (
+            <Text style={{ color: this.contrast }} key={task.id}>{task.name}</Text>
+          ))}
+          <TouchableOpacity activeOpacity={1} style={styles.input} onPress={() => this.input.isFocused() ? this.input.blur() : this.input.focus()}>
+            <TextInput
+              key={`newTask-${this.state.tasks.length}`}
+              style={[textStyle, { color: this.contrast }]}
+              placeholder="+ Add task"
+              returnKeyType="done"
+              onSubmitEditing={event => this.addTask(event.nativeEvent.text)}
+              clearOnFocus={true}
+              ref={input => this.input = input}
+            />
+          </TouchableOpacity>
+        </Container>
+      </KeyboardAwareScrollView>
     )
   }
 }
