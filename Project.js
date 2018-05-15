@@ -36,10 +36,23 @@ export default class Project extends React.Component {
       tasks: [...this.state.tasks, {
         id: this.state.tasks.length ? this.state.tasks[this.state.tasks.length - 1].id + 1 : 1,
         name
-      }]
+      }],
+      status: 'open',
     }, () => {
       this.input.focus()
     })
+  }
+
+  complete(id) {
+    const task = this.state.tasks.reduce((match, task) => task.id === id ? task : match)
+    const index = this.state.tasks.indexOf(task)
+    const tasks = [
+      ...this.state.tasks.slice(0, index),
+      {...task, status: task.status === 'done' ? 'open' : 'done' },
+      ...this.state.tasks.slice(index + 1)
+    ]
+
+    this.setState({ tasks })
   }
 
   render() {
@@ -48,7 +61,12 @@ export default class Project extends React.Component {
         <Container>
           <Heading style={{ color: this.contrast }}>{this.project.title}</Heading>
           {this.state.tasks.map(task => (
-            <Text style={{ color: this.contrast }} key={task.id}>{task.name}</Text>
+            <TouchableOpacity key={task.id} onPress={() => this.complete(task.id)}>
+              <Text style={[{ color: this.contrast }, task.status === 'done' ? {
+                opacity: .5,
+                textDecorationLine: 'line-through',
+              } : {}]}>{task.name}</Text>
+            </TouchableOpacity>
           ))}
           <TouchableOpacity activeOpacity={1} style={styles.input} onPress={() => this.input.isFocused() ? this.input.blur() : this.input.focus()}>
             <TextInput
