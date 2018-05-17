@@ -7,7 +7,7 @@ import Heading from './Heading'
 import Container from './Container'
 import Text, { css as textStyle } from './Text'
 
-const Project = ({ background, onDelete, onPress, onSubmit, title }) => (
+const Project = ({ background, tasks, onDelete, onPress, onSubmit, title }) => (
   <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
     <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]} onPress={onPress}>
       <View>
@@ -22,7 +22,12 @@ const Project = ({ background, onDelete, onPress, onSubmit, title }) => (
           />
         )}
         <View style={styles.progressBar}>
-          <View style={[styles.progressBarFill, { backgroundColor: color.contrast(background) }]} />
+          <View style={[styles.progressBarFill, {
+            backgroundColor: color.contrast(background),
+            width: tasks ?
+              ((tasks.filter(task => task.status === 'done').length / tasks.length) * 100) + '%' :
+              0,
+          }]} />
         </View>
       </View>
     </TouchableHighlight>
@@ -116,6 +121,5 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    width: '80%',
   },
 })
