@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, AsyncStorage, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Swipeable from 'react-native-swipeable'
 import Heading from './Heading'
 import Container from './Container'
 import color from './color'
@@ -55,18 +56,24 @@ export default class Project extends React.Component {
     this.setState({ tasks })
   }
 
+  delete(id) {
+    this.setState({ tasks: this.state.tasks.filter(task => task.id != id) })
+  }
+
   render() {
     return (
-      <KeyboardAwareScrollView style={{ backgroundColor: this.project.background }}>
+      <KeyboardAwareScrollView style={{ backgroundColor: this.project.background }} contentContainerStyle={{ flexGrow: 1 }}>
         <Container>
           <Heading style={{ color: this.contrast }}>{this.project.title}</Heading>
           {this.state.tasks.map(task => (
-            <TouchableOpacity key={task.id} onPress={() => this.complete(task.id)}>
-              <Text style={[{ color: this.contrast }, task.status === 'done' ? {
-                opacity: .5,
-                textDecorationLine: 'line-through',
-              } : {}]}>{task.name}</Text>
-            </TouchableOpacity>
+            <Swipeable key={task.id} rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={() => this.delete(task.id)}>
+              <TouchableOpacity onPress={() => this.complete(task.id)}>
+                <Text style={[{ color: this.contrast }, task.status === 'done' ? {
+                  opacity: .5,
+                  textDecorationLine: 'line-through',
+                } : {}]}>{task.name}</Text>
+              </TouchableOpacity>
+            </Swipeable>
           ))}
           <TouchableOpacity activeOpacity={1} style={styles.input} onPress={() => this.input.isFocused() ? this.input.blur() : this.input.focus()}>
             <TextInput
