@@ -22,7 +22,15 @@ class Project extends React.Component {
   }
 
   getCompleted(props = null) {
-    return (props || this.props).tasks.filter(task => task.status === 'done').length / (props || this.props).tasks.length
+    const tasks = (props || this.props).tasks
+
+    if (!tasks) {
+      return 0
+    }
+
+    const completed = tasks.filter(task => task.status === 'done').length / tasks.length
+
+    return isNaN(completed) ? 0 : completed
   }
 
   render() {
