@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, StatusBar, TouchableHighlight, TextInput, AsyncStorage } from 'react-native'
+import { StyleSheet, View, ScrollView, StatusBar, TouchableHighlight, TextInput, AsyncStorage, Animated } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import color from './color'
 import Swipeable from 'react-native-swipeable'
@@ -7,32 +7,56 @@ import Heading from './Heading'
 import Container from './Container'
 import Text, { css as textStyle } from './Text'
 
-const Project = ({ background, tasks, onDelete, onPress, onSubmit, title }) => (
-  <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
-    <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]} onPress={onPress}>
-      <View>
-        {title ? (
-          <Text style={{ color: color.contrast(background) }}>{title}</Text>
-        ) : (
-          <TextInput
-            style={[textStyle, { color: color.contrast(background) }]}
-            placeholder="Your project name"
-            returnKeyType="done"
-            onSubmitEditing={onSubmit}
-          />
-        )}
-        <View style={styles.progressBar}>
-          <View style={[styles.progressBarFill, {
-            backgroundColor: color.contrast(background),
-            width: tasks ?
-              ((tasks.filter(task => task.status === 'done').length / tasks.length) * 100) + '%' :
-              0,
-          }]} />
-        </View>
-      </View>
-    </TouchableHighlight>
-  </Swipeable>
-)
+class Project extends React.Component {
+  state = {
+    completed: new Animated.Value(this.getCompleted()),
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.getCompleted(prevProps) != this.getCompleted()) {
+      Animated.timing(this.state.completed, {
+        duration: 250,
+        toValue: this.getCompleted(),
+      }).start()
+    }
+  }
+
+  getCompleted(props = null) {
+    return (props || this.props).tasks.filter(task => task.status === 'done').length / (props || this.props).tasks.length
+  }
+
+  render() {
+    const { background, tasks, onDelete, onPress, onSubmit, title } = this.props
+
+    return (
+      <Swipeable rightContent={<View style={{ display: 'none' }} />} onRightActionRelease={onDelete}>
+        <TouchableHighlight underlayColor={color.darken(background)} style={[styles.box, { backgroundColor: background }]} onPress={onPress}>
+          <View>
+            {title ? (
+              <Text style={{ color: color.contrast(background) }}>{title}</Text>
+            ) : (
+              <TextInput
+                style={[textStyle, { color: color.contrast(background) }]}
+                placeholder="Your project name"
+                returnKeyType="done"
+                onSubmitEditing={onSubmit}
+              />
+            )}
+            <View style={styles.progressBar}>
+              <Animated.View style={[styles.progressBarFill, {
+                backgroundColor: color.contrast(background),
+                width: this.state.completed.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: ['0%', '100%'],
+                }),
+              }]} />
+            </View>
+          </View>
+        </TouchableHighlight>
+      </Swipeable>
+    )
+  }
+}
 
 export default class Home extends React.Component {
   state = {
