@@ -82,7 +82,7 @@ export default class Project extends React.Component {
               placeholder="+ Add task"
               returnKeyType="done"
               onSubmitEditing={event => this.addTask(event.nativeEvent.text)}
-              clearOnFocus={true}
+              blurOnSubmit={false}
               ref={input => this.input = input}
             />
           </TouchableOpacity>
