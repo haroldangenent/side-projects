@@ -2,7 +2,7 @@
   "expo": {
     "name": "Side projects",
     "icon": "./app-icon.png",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "slug": "side-projects",
     "sdkVersion": "27.0.0",
     "ios": {
